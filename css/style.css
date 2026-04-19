@@ -1,0 +1,473 @@
+/* ============================================================
+   style.css — Modern Academic · Brooke Yang
+   ============================================================ */
+
+/* --- Variables -------------------------------------------- */
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --border: #e4e1db;
+  --text: #0f0f0e;
+  --text-muted: #43403c;
+  --text-light: #9b9790;
+  --accent: #2a5298; /* deep academic blue */
+  --accent-warm: #8b3a2a; /* muted brick for tags/accents */
+  --link: #2a5298;
+  --link-hover: #1a3870;
+
+  --font-serif: "Spectral", Georgia, serif;
+  --font-sans: "Source Sans 3", system-ui, sans-serif;
+
+  --max-w: 680px;
+  --nav-h: 56px;
+
+  --radius: 3px;
+  --transition: 150ms ease;
+}
+
+/* --- Reset ------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.75;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+/* --- Nav --------------------------------------------------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 249, 247, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+}
+
+nav {
+  width: 100%;
+  max-width: calc(var(--max-w) + 80px);
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* --- Main layout ------------------------------------------ */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: calc(var(--max-w) + 80px);
+  margin: 0 auto;
+  padding: 60px 40px 80px;
+}
+
+/* --- About page ------------------------------------------- */
+.intro {
+  display: flex;
+  gap: 52px;
+  align-items: flex-start;
+  margin-bottom: 64px;
+}
+
+.intro-text {
+  flex: 1;
+}
+
+.intro-text h1 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.intro-text .lead {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.intro-text p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 6px;
+}
+
+.intro-text p + p {
+  margin-bottom: 20px;
+}
+
+.contact-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+
+.contact-links a {
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+.contact-links a:hover {
+  color: var(--accent);
+}
+
+.dot {
+  color: var(--border);
+}
+
+.intro-photo {
+  flex-shrink: 0;
+  width: 148px;
+}
+
+.intro-photo img {
+  width: 148px;
+  height: 148px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+  border: 3px solid var(--border);
+  filter: grayscale(15%);
+}
+
+/* --- Recent writing (index) ------------------------------- */
+.recent-writing h2 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* --- Writing page ----------------------------------------- */
+.page-header {
+  margin-bottom: 48px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.post-group {
+  margin-bottom: 40px;
+}
+
+.year-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+/* --- Post list (shared) ----------------------------------- */
+.post-list {
+  list-style: none;
+}
+
+.post-list li {
+  border-bottom: 1px solid var(--border);
+}
+
+.post-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+  color: var(--text);
+  transition: color var(--transition);
+}
+
+.post-link:hover {
+  color: var(--accent);
+}
+
+.post-list.full .post-link {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 18px 0;
+}
+
+.post-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.post-excerpt {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.post-meta {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.see-all {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+.see-all:hover {
+  color: var(--accent);
+}
+
+/* --- Post page -------------------------------------------- */
+.post-page {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.post-header {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  margin-bottom: 14px;
+}
+
+.post-header h1 {
+  font-size: 1.85rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+
+.post-date {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* --- Post body typography --------------------------------- */
+.post-body {
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.post-body p {
+  margin-bottom: 1.4em;
+}
+
+.post-body h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 2.2em;
+  margin-bottom: 0.6em;
+  letter-spacing: -0.01em;
+}
+
+.post-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: italic;
+  margin-top: 1.8em;
+  margin-bottom: 0.5em;
+}
+
+.post-body blockquote {
+  margin: 1.8em 0;
+  padding: 16px 24px;
+  border-left: 3px solid var(--accent);
+  background: #f0f4fb;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+
+.post-body strong {
+  font-weight: 600;
+  color: var(--text);
+}
+.post-body em {
+  font-style: italic;
+}
+
+/* KaTeX display math */
+.post-body .katex-display {
+  margin: 1.6em 0;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+/* inline math baseline alignment */
+.post-body .katex {
+  font-size: 1.05em;
+}
+
+/* --- Post footer ------------------------------------------ */
+.post-footer {
+  margin-top: 52px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+
+.post-footer a {
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+.post-footer a:hover {
+  color: var(--accent);
+}
+
+/* --- Footer ----------------------------------------------- */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 40px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+/* --- Responsive ------------------------------------------- */
+@media (max-width: 640px) {
+  nav {
+    padding: 0 20px;
+  }
+
+  main {
+    padding: 40px 20px 60px;
+  }
+
+  .intro {
+    flex-direction: column-reverse;
+    gap: 28px;
+  }
+
+  .intro-photo {
+    width: 100px;
+  }
+
+  .intro-photo img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .intro-text h1 {
+    font-size: 1.6rem;
+  }
+
+  .post-link {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .post-header h1 {
+    font-size: 1.5rem;
+  }
+
+  footer {
+    padding: 20px;
+  }
+}
