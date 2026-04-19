@@ -8,21 +8,18 @@
   --surface: #ffffff;
   --border: #e4e1db;
   --text: #0f0f0e;
-  --text-muted: #43403c;
-  --text-light: #9b9790;
-  --accent: #2a5298; /* deep academic blue */
-  --accent-warm: #8b3a2a; /* muted brick for tags/accents */
+  --text-light: #5e5b56;
+  --accent: #2a5298;
+  --accent-warm: #8b3a2a;
   --link: #2a5298;
   --link-hover: #1a3870;
 
-  --font-serif: "Spectral", Georgia, serif;
-  --font-sans: "Source Sans 3", system-ui, sans-serif;
+  --font: Arial, sans-serif;
 
   --max-w: 680px;
   --nav-h: 56px;
 
   --radius: 3px;
-  --transition: 150ms ease;
 }
 
 /* --- Reset ------------------------------------------------- */
@@ -41,7 +38,7 @@ html {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-serif);
+  font-family: var(--font);
   font-size: 17px;
   line-height: 1.75;
   min-height: 100vh;
@@ -93,12 +90,12 @@ nav {
 }
 
 .nav-links a {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.875rem;
   font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text);
   padding-bottom: 2px;
   border-bottom: 2px solid transparent;
   transition:
@@ -134,7 +131,7 @@ main {
 }
 
 .intro-text h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font);
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -151,7 +148,7 @@ main {
 
 .intro-text p {
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1.65;
   margin-bottom: 6px;
 }
@@ -166,12 +163,12 @@ main {
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 24px;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.875rem;
 }
 
 .contact-links a {
-  color: var(--text-muted);
+  color: var(--text);
   transition: color var(--transition);
 }
 .contact-links a:hover {
@@ -191,14 +188,13 @@ main {
   width: 148px;
   height: 148px;
   object-fit: cover;
-  /* border-radius: 50%; */
   border: 3px solid var(--border);
   filter: grayscale(15%);
 }
 
 /* --- Recent writing (index) ------------------------------- */
 .recent-writing h2 {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -223,9 +219,9 @@ main {
 }
 
 .page-header p {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1.6;
 }
 
@@ -234,7 +230,7 @@ main {
 }
 
 .year-label {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -274,7 +270,7 @@ main {
 }
 
 .post-title {
-  font-family: var(--font-serif);
+  font-family: var(--font);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.4;
@@ -282,15 +278,15 @@ main {
 
 .post-excerpt {
   display: block;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1.5;
   margin-top: 2px;
 }
 
 .post-meta {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.8rem;
   color: var(--text-light);
   white-space: nowrap;
@@ -300,9 +296,9 @@ main {
 .see-all {
   display: inline-block;
   margin-top: 16px;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text);
   transition: color var(--transition);
 }
 .see-all:hover {
@@ -323,7 +319,7 @@ main {
 
 .post-tag {
   display: inline-block;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -341,15 +337,15 @@ main {
 }
 
 .post-date {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.85rem;
   color: var(--text-light);
 }
 
 /* --- Post body typography --------------------------------- */
 .post-body {
-  font-size: 1.05rem;
-  line-height: 1.85;
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 .post-body p {
@@ -357,7 +353,7 @@ main {
 }
 
 .post-body h2 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-top: 2.2em;
   margin-bottom: 0.6em;
@@ -365,7 +361,7 @@ main {
 }
 
 .post-body h3 {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   font-style: italic;
   margin-top: 1.8em;
@@ -379,14 +375,15 @@ main {
   background: #f0f4fb;
   border-radius: 0 var(--radius) var(--radius) 0;
   font-style: italic;
-  color: var(--text-muted);
-  font-size: 0.98rem;
+  color: var(--text);
+  font-size: 0.88rem;
 }
 
 .post-body strong {
   font-weight: 600;
   color: var(--text);
 }
+
 .post-body em {
   font-style: italic;
 }
@@ -408,12 +405,12 @@ main {
   margin-top: 52px;
   padding-top: 24px;
   border-top: 1px solid var(--border);
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.875rem;
 }
 
 .post-footer a {
-  color: var(--text-muted);
+  color: var(--text);
   transition: color var(--transition);
 }
 .post-footer a:hover {
@@ -424,7 +421,7 @@ main {
 footer {
   border-top: 1px solid var(--border);
   padding: 24px 40px;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.8rem;
   color: var(--text-light);
   text-align: center;
