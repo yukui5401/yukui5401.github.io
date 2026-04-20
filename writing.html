@@ -6,6 +6,30 @@
     <title>Writing — Brooke Yang</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- KaTeX for math rendering -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+          ],
+        });
+      });
+    </script>
   </head>
   <body>
     <header>
@@ -27,8 +51,22 @@
       </div>
 
       <section class="post-group">
-        <h3 class="year-label">2025</h3>
+        <h3 class="year-label">2026</h3>
         <ul class="post-list full">
+          <li>
+            <a href="posts/post-1.html" class="post-link">
+              <div>
+                <span class="post-title"
+                  >A Geometric Perspective into Farkas' Lemma</span
+                >
+                <span class="post-excerpt"
+                  >What the infeasibility of a system $Ax\le b$ really tells
+                  us.</span
+                >
+              </div>
+              <span class="post-meta">April 2026 &middot; Analysis</span>
+            </a>
+          </li>
           <li>
             <a href="posts/sample-post.html" class="post-link">
               <div>
