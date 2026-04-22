@@ -1,137 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Why the IVT is Deeper Than It Looks — Brooke yang</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Geometric Perspective into Farkas' Lemma — Brooke yang</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-  <!-- KaTeX for math rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      renderMathInElement(document.querySelector('.post-body'), {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$', right: '$', display: false}
-        ]
+    <!-- KaTeX for math rendering -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.querySelector(".post-body"), {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+          ],
+        });
       });
-    });
-  </script>
-</head>
-<body>
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-links">
+          <a href="../index.html">About</a>
+          <a href="../writing.html" class="active">Writing</a>
+        </div>
+      </nav>
+    </header>
 
-  <header>
-    <nav>
-      <div class="nav-links">
-        <a href="../index.html">About</a>
-        <a href="../writing.html" class="active">Writing</a>
-      </div>
-    </nav>
-  </header>
+    <main class="post-page">
+      <article>
+        <div class="post-header">
+          <div class="post-tag">Analysis</div>
+          <h1>A Geometric Perspective into Farkas' Lemma</h1>
+          <div class="post-date">April 19, 2026</div>
+        </div>
 
-  <main class="post-page">
-    <article>
+        <div class="post-body">
+          <p>One common variant of Farkas' Lemma is stated as:</p>
 
-      <div class="post-header">
-        <div class="post-tag">Analysis</div>
-        <h1>Why the Intermediate Value Theorem is Deeper Than It Looks</h1>
-        <div class="post-date">April 19, 2026</div>
-      </div>
+          <blockquote>
+            Let $A\in \mathbb{R}^{m\times n}$ and $b\in \mathbb{R}^m$. The
+            system $Ax \le b$ is infeasible if and only if there exists a vector
+            $y \in \mathbb{R}^m$ such that $y \ge 0, y^\top A = 0,$ and $y^\top
+            b < 0$.
+          </blockquote>
 
-      <div class="post-body">
+          <p>
+            The system $Ax \le b$ describes a set of $m$ linear inequalities.
+            Each inequality $a_i^\top x \le b_i$ defines a
+            <b>half-space</b> in $\mathbb{R}^n$. The set of all $x$ satisfying
+            the system is the intersection of these half-spaces, forming a
+            <b>convex polyhedron</b>.
+          </p>
 
-        <p>
-          Most students encounter the Intermediate Value Theorem early and move on quickly — 
-          it seems obvious. If $f$ is continuous on $[a, b]$ and $f(a) < 0 < f(b)$, 
-          then of course there's a point where $f$ is zero. The graph has to cross the axis. What's there to prove?
-        </p>
+          <p>
+            So, $Ax \le b$ is feasible $\iff$ the intersection of these $m$
+            half-spaces is non-empty. If $n=2$, this is the area bounded by
+            several lines.
+          </p>
 
-        <p>
-          But this intuition secretly relies on something profound about the real numbers 
-          that has nothing to do with calculus.
-        </p>
+          <figure>
+            <img
+              src="../images/post-1/polyhedron.png"
+              alt="Convex Polyhedron"
+              width=400
+            />
+            <figcaption>
+              Figure 1: Intersection of 2 half-spaces in $\mathbb{R}^2$.
+            </figcaption>
+          </figure>
 
-        <h2>The Statement</h2>
+          <h2>The Geometry of Infeasibility</h2>
+          <p>
+            How does a "certificate" $y \ge 0$ prove infeasibility? Since $y \ge
+            0$, we can take a <b>non-negative linear combination</b> of our
+            original inequalities without flipping the inequality signs:
+          </p>
 
-        <p>Let's be precise. The IVT says:</p>
+          $$y^\top (Ax) \le y^\top b$$
 
-        <blockquote>
-          Let $f : [a, b] \to \mathbb{R}$ be continuous. If $f(a) \leq c \leq f(b)$, 
-          then there exists some $x \in [a, b]$ such that $f(x) = c$.
-        </blockquote>
+          <p>
+            Because of the properties of $y$, we can rewrite the left side as
+            $(y^\top A)x$. If we find a $y$ such that $y^\top A = 0$, the
+            expression simplifies to:
+          </p>
 
-        <p>
-          The proof most textbooks give uses the <em>least upper bound property</em> of $\mathbb{R}$: 
-          every non-empty set bounded above has a supremum. Define
-        </p>
+          $$0 \le y^\top b$$
 
-        $$S = \{ x \in [a,b] : f(x) \leq c \}$$
+          <p>
+            But the lemma states $y^\top b < 0$. This yields a contradiction.
+          </p>
 
-        <p>
-          and let $s = \sup S$. A short $\varepsilon$-$\delta$ argument then shows $f(s) = c$.
-        </p>
+          <p>
+            Geometrically, this $y$ is constructing a "composite" constraint
+            from the others. If $y^\top A = 0$, it means the weighted sum of the
+            normal vectors of the half-spaces cancels out to zero. If the
+            weighted sum of the offsets ($y^\top b$) is negative, it implies
+            that the half-spaces are pushing away from each other so forcefully
+            that no point can satisfy them all.
+          </p>
+        </div>
 
-        <h2>What's Really Going On</h2>
+        <footer class="post-footer">
+          <a href="../writing.html">← Back to writing</a>
+        </footer>
+      </article>
+    </main>
 
-        <p>
-          Here's the thing: the IVT <em>fails</em> if you replace $\mathbb{R}$ with $\mathbb{Q}$.
-        </p>
+    <footer>
+      <p>Last updated: April 2026</p>
+    </footer>
 
-        <p>
-          Consider $f(x) = x^2 - 2$ on $[0, 2] \cap \mathbb{Q}$. We have $f(0) = -2 < 0$ and 
-          $f(2) = 2 > 0$, and $f$ is continuous. But there is no rational $x$ with $f(x) = 0$, 
-          because $\sqrt{2} \notin \mathbb{Q}$.
-        </p>
-
-        <p>
-          So the IVT is not just a fact about continuous functions. It is a fact about 
-          the <strong>completeness</strong> of the real line — the absence of gaps. The rationals 
-          have gaps. The reals don't. That's the whole story.
-        </p>
-
-        <h2>A Consequence Worth Pausing On</h2>
-
-        <p>
-          Every polynomial of odd degree with real coefficients has at least one real root. 
-          This follows immediately: for large $|x|$, the leading term dominates, so the polynomial 
-          is eventually positive and eventually negative. By IVT, it must hit zero somewhere.
-        </p>
-
-        <p>
-          Written cleanly: if $p(x) = a_n x^n + \cdots + a_0$ with $a_n \neq 0$ and $n$ odd, then
-        </p>
-
-        $$\lim_{x \to +\infty} p(x) = +\infty \quad \text{and} \quad \lim_{x \to -\infty} p(x) = -\infty$$
-
-        <p>
-          (or the reverse, depending on the sign of $a_n$). Either way, IVT guarantees a root in between.
-        </p>
-
-        <h2>Takeaway</h2>
-
-        <p>
-          Next time a theorem feels obvious, it's worth asking: what exactly is doing the work? 
-          In the case of the IVT, the hidden engine is the completeness of $\mathbb{R}$ — 
-          one of the deepest and most carefully constructed facts in all of mathematics.
-        </p>
-
-      </div>
-
-      <footer class="post-footer">
-        <a href="../writing.html">← Back to writing</a>
-      </footer>
-
-    </article>
-  </main>
-
-  <footer>
-    <p>Last updated: April 2026</p>
-  </footer>
-
-  <script src="../js/main.js"></script>
-</body>
+    <script src="../js/main.js"></script>
+  </body>
 </html>
