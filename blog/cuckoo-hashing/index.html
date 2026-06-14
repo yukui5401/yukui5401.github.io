@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuckoo Hashing and the Phase Transition | Brooke Yang</title>
+    <script src="/head.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <span class="nav-name">Brooke Yang</span>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/blog" class="active">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="post-layout">
+      <article class="post">
+        <header class="post-header">
+          <div class="post-breadcrumb">
+            <a href="/blog"> <i class="fas fa-arrow-left-long"></i> Blog</a>
+          </div>
+          <p class="hero-label">June 13, 2026</p>
+          <h1>Cuckoo Hashing and the Phase Transition</h1>
+          <div class="post-tag-row">
+            <span class="tag">algorithms</span>
+            <span class="tag">graph theory</span>
+          </div>
+        </header>
+
+        <div class="post-body">
+          <p>
+            The standard approaches to collision resolution in hash tables
+            involve some form of graceful degradation. Chaining allows buckets
+            to grow into lists, linear probing searches sequentially for an
+            empty slot, and so on. In all these cases, however, the worst-case
+            lookup time is no longer constant. Cuckoo hashing is different: it
+            guarantees $O(1)$ worst-case lookup by ensuring every key has
+            exactly two candidate locations, and lives in one of them. The price
+            is a more involved insertion procedure—and understanding precisely
+            when that procedure fails is the central question of this post.
+          </p>
+
+          <p>
+            The answer turns out to lie in random graph theory, specifically in
+            a phase transition phenomenon that determines whether a certain
+            random graph is "simple enough" to admit a valid key placement. The
+            connection is exact, not approximate, which is what makes it so
+            satisfying.
+          </p>
+
+          <h2>The Algorithm</h2>
+
+          <p>
+            To formalize this, let us fix two independent hash functions $h_1,
+            h_2 : U \to [m]$ drawn from a universal family, and maintain two
+            tables $T_1$ and $T_2$ each of size $m$. Every key $x$ is required
+            to occupy either $T_1[h_1(x)]$ or $T_2[h_2(x)]$. Because there are
+            only ever two potential locations, a lookup simply checks both in
+            constant time.
+          </p>
+
+          <p>
+            The complexity instead arises during insertion. To insert a key $x$,
+            we first try to place it at $T_1[h_1(x)]$. If that slot is empty, we
+            are done. Otherwise, we evict the current occupant $y$ to make room
+            for $x$, and then attempt to place $y$ at its alternate location
+            $T_2[h_2(y)]$. This shift may in turn displace another key, sparking
+            a chain of evictions where each key is kicked to its other candidate
+            slot. If the chain eventually terminates by finding an empty slot,
+            the insertion succeeds. If it cycles, however, we declare failure
+            and rehash the entire table with a new pair of hash functions.
+          </p>
+
+          <p>
+            The name comes from the cuckoo bird, which lays its eggs in other
+            birds' nests, displacing the existing eggs. The analogy is highly
+            apt: each insertion potentially upends a sequence of prior
+            residents.
+          </p>
+
+          <div id="eviction-chain-diagram"></div>
+
+          <h2>The Graph Reduction</h2>
+
+          <p>
+            This eviction chain has a natural, elegant graph-theoretic
+            description. We can define the <em>cuckoo graph</em> $G = (L \cup R,
+            E)$ as a bipartite graph where $L$ and $R$ are both copies of $[m]$,
+            representing the slots of $T_1$ and $T_2$ respectively. For each key
+            $x$ currently in the table, we add an undirected edge between its
+            candidate locations $h_1(x) \in L$ and $h_2(x) \in R$.
+          </p>
+
+          <p>
+            Under this framework, an eviction chain starting from a key $x$
+            corresponds perfectly to a walk in $G$ beginning at $h_1(x)$,
+            alternating between $L$ and $R$ along edges. Crucially, the chain
+            cycles if and only if this walk returns to a previously visited
+            vertex—which happens exactly when the walk is trapped inside a cycle
+            of $G$. This mapping gives us a clean structural characterization.
+          </p>
+
+          <div class="theorem">
+            <p>
+              <strong>Theorem.</strong> A placement of all $n$ keys into $T_1$
+              and $T_2$ exists if and only if every connected component of the
+              cuckoo graph has at most as many edges as vertices.
+            </p>
+          </div>
+
+          <p>
+            To see why, consider a connected component with $k$ vertices and $k$
+            edges. Such a component contains exactly one cycle, with the edges
+            not on the loop forming a forest of trees hanging off it. We can
+            successfully resolve this component by orienting each tree edge away
+            from the cycle and assigning each key (edge) to the table
+            corresponding to its tail vertex. Keys on the cycle can similarly be
+            assigned by traversing the loop and alternating assignments. While
+            this works seamlessly for one cycle, the logic collapses if a
+            component contains two or more cycles. In that case, some vertex
+            would need to simultaneously host two keys—which is impossible since
+            each slot can hold at most one key.
+          </p>
+
+          <div id="cuckoo-graph-diagram"></div>
+
+          <h2>The Phase Transition</h2>
+
+          <p>
+            This theorem effectively reduces the question of insertion success
+            to a structural property of a random graph. Specifically, with $n$
+            keys and tables of size $m$, the cuckoo graph acts as a random
+            bipartite graph on vertex sets of size $m$ each, with $n$ edges
+            placed uniformly at random. Here, it becomes useful to let $\alpha =
+            n/m$ denote the load factor.
+          </p>
+
+          <p>
+            This brings us directly into the realm of random graph theory,
+            originally developed by Erdős and Rényi in the 1960s. Their work
+            characterizes exactly when such graphs develop components with
+            excess edges. The central result is that there is a sharp threshold:
+            below a critical load factor, all components are small trees or
+            contain at most one cycle with high probability; above it, a giant
+            component with many excess edges inevitably emerges.
+          </p>
+
+          <p>
+            For the random bipartite graph model relevant here, this threshold
+            occurs precisely at:
+          </p>
+
+          $$\alpha_c = 1$$
+
+          <p>
+            Below $\alpha < 1$, the graph is subcritical: components are small
+            and sparse, meaning insertion always succeeds with high probability.
+            Above $\alpha > 1$, however, the graph enters a supercritical regime
+            where a giant component inevitably contains multiple cycles, and no
+            valid placement can exist.
+          </p>
+
+          <p>
+            This behavior represents a phase transition in the precise sense
+            used in statistical physics. The performance of the system changes
+            discontinuously at the critical point—there is no gradual
+            degradation. Instead, the system transitions sharply from "works" to
+            "fails" the moment $\alpha$ crosses 1.
+          </p>
+
+          <p>
+            Friedman, Karp, and Mitzenmacher made this quantitative, proving
+            that the failure probability jumps from $o(1)$ to $1 - o(1)$ within
+            a narrow window of width $O(1/m)$ around $\alpha_c$. For large
+            tables, this window is extremely narrow, meaning that in practice,
+            there is essentially no safe operating regime near the threshold.
+          </p>
+
+          <div id="phase-transition-diagram"></div>
+
+          <h2>Implications for Practice</h2>
+
+          <p>
+            As a consequence of this boundary, the standard real-world
+            recommendation is to use $m = 2n$, giving $\alpha = 1/2$, which sits
+            comfortably in the safe, subcritical regime. This choice is not a
+            mere heuristic; it follows directly from the phase transition
+            analysis. At $\alpha = 1/2$, the expected number of rehashes is
+            bounded at $O(1)$, and the total space used is $2n$ slots for $n$
+            keys—a predictable, constant-factor overhead to guarantee optimal
+            performance.
+          </p>
+
+          <p>
+            It is also worth noting that the analysis extends naturally to
+            $d$-ary cuckoo hashing, where each key has $d$ candidate locations
+            across $d$ tables. The corresponding cuckoo graph generalizes into a
+            $d$-uniform hypergraph, and the phase transition threshold increases
+            with $d$, allowing much higher load factors while still maintaining
+            the $O(1)$ worst-case lookup guarantee.
+          </p>
+
+          <h2>A Closing Remark</h2>
+
+          <p>
+            Ultimately, what makes this analysis compelling is the absolute
+            purity of the reduction. We did not use random graph theory as a
+            loose approximation or a heuristic framework. The cuckoo graph
+            <em>is</em> the random graph. The question of whether insertion
+            succeeds is exactly the question of whether the graph is
+            subcritical. In short, the phase transition in the graph model is
+            the phase transition in the algorithm.
+          </p>
+
+          <p>
+            This kind of structural equivalence between an algorithmic question
+            and a well-studied mathematical object is relatively rare, and well
+            worth appreciating when it appears. While the algorithm itself is
+            simple to state and implement, the precise conditions under which it
+            works or fails turn out to be an elegant theorem in combinatorics.
+          </p>
+        </div>
+
+        <footer class="post-footer">
+          <p>
+            <a href="/blog"
+              ><i class="fas fa-arrow-left-long"></i> Back to all posts</a
+            >
+          </p>
+        </footer>
+      </article>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+      fetch("/footer.html")
+        .then((r) => r.text())
+        .then((html) => {
+          document.getElementById("footer").innerHTML = html;
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src="cuckoo-graph.js"></script>
+    <script src="eviction-chain.js"></script>
+    <script src="phase-transition.js"></script>
+  </body>
+</html>

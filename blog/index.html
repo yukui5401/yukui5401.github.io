@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Brooke Yang</title>
+    <script src="/head.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <span class="nav-name">Brooke Yang</span>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/blog" class="active">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="blog-layout">
+      <header class="page-header">
+        <p class="hero-label">Writing</p>
+        <h1>Math Blog</h1>
+        <p class="page-subtitle">
+          Notes on mathematics — expository pieces, observations, and the
+          occasional rabbit hole I fell into.
+        </p>
+      </header>
+
+      <section class="blog-index">
+        <div class="year-group">
+          <span class="year-label">2026</span>
+          <div class="post-list">
+            <a href="/blog/cuckoo-hashing/" class="post-item">
+              <span class="post-date">June 13</span>
+              <div class="post-meta">
+                <span class="post-title"
+                  >Cuckoo Hashing and the Phase Transition</span
+                >
+                <span class="post-tags"
+                  ><span class="tag">algorithms</span>
+                  <span class="tag">graph theory</span></span
+                >
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <aside class="blog-sidebar">
+        <div class="widget">
+          <h3>Tags</h3>
+          <div class="tag-cloud">
+            <a href="#" class="tag">algorithms</a>
+            <a href="#" class="tag">graph theory</a>
+          </div>
+          <button id="tag-clear">clear</button>
+        </div>
+      </aside>
+    </main>
+
+    <div id="footer"></div>
+    <script>
+      fetch("/footer.html")
+        .then((r) => r.text())
+        .then((html) => {
+          document.getElementById("footer").innerHTML = html;
+        });
+    </script>
+    <script>
+      document.querySelectorAll(".tag-cloud .tag").forEach((tag) => {
+        tag.addEventListener("click", (e) => {
+          e.preventDefault();
+          tag.classList.toggle("active");
+
+          const selected = [
+            ...document.querySelectorAll(".tag-cloud .tag.active"),
+          ].map((t) => t.textContent.trim().toLowerCase());
+
+          document.querySelectorAll(".post-item").forEach((post) => {
+            if (selected.length === 0) {
+              post.style.display = "";
+              return;
+            }
+            const postTags = [...post.querySelectorAll(".post-tags .tag")].map(
+              (t) => t.textContent.trim().toLowerCase(),
+            );
+            post.style.display = selected.some((s) => postTags.includes(s))
+              ? ""
+              : "none";
+          });
+        });
+      });
+
+      document.getElementById("tag-clear").addEventListener("click", (e) => {
+        e.preventDefault();
+        document
+          .querySelectorAll(".tag-cloud .tag")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".post-item")
+          .forEach((post) => (post.style.display = ""));
+      });
+    </script>
+  </body>
+</html>
