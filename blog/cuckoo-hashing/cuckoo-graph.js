@@ -132,6 +132,7 @@ window.addEventListener("load", () => {
   const leftG = svg.append("g");
   const rightG = svg.append("g");
 
+  // FIXED: Added [2, 2] edge. Now has 6 edges and 6 nodes (1 perfect closed cycle)
   drawPanel(
     leftG,
     0,
@@ -143,6 +144,7 @@ window.addEventListener("load", () => {
       [1, 1, baseEdgeColor],
       [2, 1, baseEdgeColor],
       [2, 2, baseEdgeColor],
+      [0, 2, baseEdgeColor],
     ],
     "one cycle — valid",
     "Valid component",
@@ -158,6 +160,7 @@ window.addEventListener("load", () => {
     .attr("stroke-width", 0.5)
     .attr("stroke-dasharray", "4 4");
 
+  // FIXED: Now contains 7 edges over 6 nodes, forcing a true double-cycle failure
   drawPanel(
     rightG,
     panelWidth,
@@ -169,7 +172,8 @@ window.addEventListener("load", () => {
       [1, 1, baseEdgeColor],
       [2, 1, baseEdgeColor],
       [2, 2, baseEdgeColor],
-      [0, 1, insertedEdgeColor, 18],
+      [0, 2, baseEdgeColor],
+      [0, 1, insertedEdgeColor, 18], // The 7th insertion edge that breaks the system
     ],
     "two cycles — no valid placement",
     "Invalid component",
@@ -184,7 +188,6 @@ window.addEventListener("load", () => {
     .attr("stroke", "#eee1d4")
     .attr("stroke-width", 1);
 
-  // Clean, multi-line footer block that dynamically fits any container size
   const footerText = svg
     .append("text")
     .attr("x", width / 2)
@@ -198,14 +201,12 @@ window.addEventListener("load", () => {
     .append("tspan")
     .attr("x", width / 2)
     .text(
-      "The newly inserted connection (highlighted in orange) introduces a double cycle",
+      "The newly inserted connection (highlighted in orange) introduces a double cycle inside the component,",
     );
 
   footerText
     .append("tspan")
     .attr("x", width / 2)
     .attr("dy", "16px")
-    .text(
-      "inside the component, making a successful slot placement impossible.",
-    );
+    .text("making a successful slot placement mathematically impossible.");
 });
