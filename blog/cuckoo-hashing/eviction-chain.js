@@ -186,12 +186,12 @@ window.addEventListener("load", () => {
         .append("text")
         .attr("class", "evict-arrow")
         .attr("x", midX)
-        .attr("y", (y1 + y2) / 2 - 8)
+        .attr("y", Math.min(y1, y2))
         .attr("text-anchor", "middle")
         .attr("font-size", "11px")
         .attr("fill", arrowColor)
         .attr("font-style", "italic")
-        .text("evict B →");
+        .text("evict B");
     }
   }
 
